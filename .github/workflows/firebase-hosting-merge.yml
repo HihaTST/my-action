@@ -16,9 +16,15 @@ jobs:
           node-version: '16.x'
       - run: npm install
       - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+#      - uses: FirebaseExtended/action-hosting-deploy@v0
+#        with:
+#          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+#          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MY_ACTION_48F3B }}'
+#          channelId: live
+#          projectId: my-action-48f3b
+      - name: GitHub Action for Firebase
+        uses: w9jds/firebase-action@master
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MY_ACTION_48F3B }}'
-          channelId: live
-          projectId: my-action-48f3b
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MY_ACTION_48F3B }}
